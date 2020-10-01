@@ -85,49 +85,48 @@ export class MockLink extends ApolloLink {
       }
     );
 
+    let error: Error | undefined;
+
     if (!response || typeof responseIndex === 'undefined') {
-      this.onError(new Error(
+      error = new Error(
         `No more mocked responses for the query: ${print(
           operation.query
         )}, variables: ${JSON.stringify(operation.variables)}`
-      ));
-      return null;
-    }
+      );
+    } else {
+      this.mockedResponsesByKey[key].splice(responseIndex, 1);
 
-    this.mockedResponsesByKey[key].splice(responseIndex, 1);
+      const { newData } = response;
+      if (newData) {
+        response.result = newData();
+        this.mockedResponsesByKey[key].push(response);
+      }
 
-    const { newData } = response!;
-
-    if (newData) {
-      response!.result = newData();
-      this.mockedResponsesByKey[key].push(response!);
-    }
-
-    const { result, error, delay } = response!;
-
-    if (!result && !error) {
-      this.onError(new Error(
-        `Mocked response should contain either result or error: ${key}`
-      ));
+      error = response.error;
+      if (!response.result && !response.error) {
+        error = new Error(
+          `Mocked response should contain either result or error: ${key}`
+        );
+      }
     }
 
     return new Observable(observer => {
       let timer = setTimeout(
         () => {
           if (error) {
-            observer.error(error);
+            this.onError(error, observer);
           } else {
-            if (result) {
+            if (response!.result) {
               observer.next(
-                typeof result === 'function'
-                  ? (result as ResultFunction<FetchResult>)()
-                  : result
+                typeof response!.result === 'function'
+                  ? (response!.result as ResultFunction<FetchResult>)()
+                  : response!.result
               );
             }
             observer.complete();
           }
         },
-        delay ? delay : 0
+        response?.delay || 0
       );
 
       return () => {
