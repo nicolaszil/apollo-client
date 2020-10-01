@@ -11,6 +11,18 @@
   [@benjamn](https://github.com/benjamn) in [#7098](https://github.com/apollographql/apollo-client/pull/7098)
   > Since this change converts prior exceptions to `null` returns, and since `null` was already a possible return value according to the `TData | null` return type, we are optimistic this change will be backwards compatible (as long as `null` was properly handled before), but **we need your beta feedback to be sure!**
 
+- Ensure `MockLink` (used by `MockedProvider`) returns all errors through the Link's `Observable`, instead of throwing some errors (like `No more mocked responses for the query ...`) leading to uncaught exceptions. All errors are now available via the `error` property of a result, and `MockLink` will no longer trigger any uncaught exceptions. <br/>
+  [@hwillson](https://github.com/hwillson) in [#7110](https://github.com/apollographql/apollo-client/pull/7110)
+  > Returning all errors through the Link's `Observable` was the default behavior in Apollo Client 2.x. We changed it for 3, but the change has been problematic for those looking to migrate from 2.x to 3. We've decided to change this back with the understanding that not many people want or are relying on `MockLink`'s throwing exception approach. If anyone is relying on this functionality, it can be re-created by leveraging `MockLink.setOnError` as follows:
+
+  ```js
+  const mocks = // ...your mocks...
+  const mockLink = new MockLink(mocks);
+  mockLink.setOnError(error => { throw error });
+  // ... then call with something like
+  <MockedProvider link={mockLink}>
+  ```
+
 ## Improvements
 
 - Support inheritance of type and field policies, according to `possibleTypes`. <br/>
