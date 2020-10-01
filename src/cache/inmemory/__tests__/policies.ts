@@ -2580,7 +2580,7 @@ describe("type policies", function () {
             }
           },
         }
-      ]).setOnError(reject);
+      ]);
 
       const client = new ApolloClient({ link, cache });
 
@@ -3002,7 +3002,7 @@ describe("type policies", function () {
             },
           },
         },
-      ]).setOnError(reject);
+      ]);
 
       const client = new ApolloClient({ link, cache });
 

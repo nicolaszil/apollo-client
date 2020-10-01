@@ -156,7 +156,7 @@ describe('mutation results', () => {
         request: { query: queryWithTypename } as any,
         result,
         delay,
-      }, ...mockedResponses).setOnError(reject),
+      }, ...mockedResponses),
       cache: new InMemoryCache({
         dataIdFromObject: (obj: any) => {
           if (obj.id && obj.__typename) {
@@ -260,7 +260,7 @@ describe('mutation results', () => {
       result: {
         data: { mini: { id: 1, cover: 'image2', __typename: 'Mini' } },
       },
-    }).setOnError(reject);
+    });
 
     interface Data {
       mini: { id: number; cover: string; __typename: string };
@@ -332,7 +332,7 @@ describe('mutation results', () => {
           },
         });
         observer.complete();
-      })).setOnError(reject),
+      })),
     });
 
     const mutation = gql`
@@ -832,7 +832,7 @@ describe('mutation results', () => {
       }, {
         request: { query: resetMutation } as any,
         result: resetMutationResult,
-      }).setOnError(reject),
+      }),
       cache: new InMemoryCache({ addTypename: false }),
     });
 
@@ -1429,7 +1429,7 @@ describe('mutation results', () => {
           request: {query: mutation} as any,
           result: result1,
 
-        }).setOnError(reject),
+        }),
         cache: new InMemoryCache({addTypename: false}),
       });
 

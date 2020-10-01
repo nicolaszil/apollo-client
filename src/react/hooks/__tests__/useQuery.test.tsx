@@ -361,7 +361,7 @@ describe('useQuery Hook', () => {
       }
 
       render(
-        <MockedProvider link={new MockLink(CAR_MOCKS).setOnError(reject)}>
+        <MockedProvider link={new MockLink(CAR_MOCKS)}>
           <Fragment>
             <WrapperComponent something={1} />
             <WrapperComponent something={3} />
@@ -538,7 +538,7 @@ describe('useQuery Hook', () => {
       };
 
       render(
-        <MockedProvider link={new MockLink(CAR_MOCKS).setOnError(reject)}>
+        <MockedProvider link={new MockLink(CAR_MOCKS)}>
           <Component />
         </MockedProvider>
       );
@@ -556,7 +556,7 @@ describe('useQuery Hook', () => {
         ...CAR_MOCKS,
       ];
 
-      const mockLink = new MockLink(mocks).setOnError(reject);
+      const mockLink = new MockLink(mocks);
 
       const linkRequestSpy = jest.spyOn(mockLink, 'request');
 
@@ -628,7 +628,7 @@ describe('useQuery Hook', () => {
         const mocks = [...CAR_MOCKS, ...CAR_MOCKS];
 
         unmount = render(
-          <MockedProvider link={new MockLink(mocks).setOnError(reject)}>
+          <MockedProvider link={new MockLink(mocks)}>
             <Component />
           </MockedProvider>
         ).unmount;
@@ -847,7 +847,7 @@ describe('useQuery Hook', () => {
         mocks.push(...mocks);
         mocks.push(...mocks);
 
-        const link = new MockLink(mocks).setOnError(reject);
+        const link = new MockLink(mocks);
 
         let renderCount = 0;
         function App() {

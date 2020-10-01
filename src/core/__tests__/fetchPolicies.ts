@@ -63,7 +63,7 @@ const createLink = (reject: (reason: any) => any) =>
   }, {
     request: { query },
     result: { data: result },
-  }).setOnError(reject);
+  });
 
 const createFailureLink = () =>
   mockSingleLink({
@@ -87,7 +87,7 @@ const createMutationLink = (reject: (reason: any) => any) =>
   {
     request: { query },
     result: { data: merged },
-  }).setOnError(reject);
+  });
 
 describe('network-only', () => {
   itAsync('requests from the network even if already in cache', (resolve, reject) => {

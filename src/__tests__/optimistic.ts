@@ -1281,7 +1281,7 @@ describe('optimistic mutation results', () => {
         request: { query: mutation },
         result: mutationResult2,
         delay: 20,
-      }).setOnError(reject);
+      });
 
       const customOptimisticResponse1 = {
         __typename: 'Mutation',
@@ -1746,7 +1746,7 @@ describe('optimistic mutation results', () => {
         request: { query: mutation },
         result: mutationResult2,
         delay: 20,
-      }).setOnError(reject);
+      });
 
       const customOptimisticResponse1 = {
         __typename: 'Mutation',
@@ -2221,7 +2221,7 @@ describe('optimistic mutation - githunt comments', () => {
         variables,
       },
       result,
-    }, ...mockedResponses).setOnError(reject);
+    }, ...mockedResponses);
 
     const client = new ApolloClient({
       link,

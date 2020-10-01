@@ -1306,7 +1306,7 @@ describe('ObservableQuery', () => {
       }, {
         request: { query: queryWithFragment, variables },
         result: { data: dataTwoWithTypename },
-      }).setOnError(reject);
+      });
 
       const client = new ApolloClient({
         link: ni,

@@ -31,7 +31,7 @@ describe('updateQuery on a simple query', () => {
     const link = mockSingleLink({
       request: { query },
       result,
-    }).setOnError(reject);
+    });
 
     const client = new ApolloClient({
       link,
@@ -97,7 +97,7 @@ describe('updateQuery on a query with required and optional variables', () => {
         variables,
       },
       result,
-    }).setOnError(reject);
+    });
 
     const client = new ApolloClient({
       link,
@@ -206,7 +206,7 @@ describe('fetchMore on an observable query', () => {
         variables,
       },
       result,
-    }, ...mockedResponses).setOnError(reject);
+    }, ...mockedResponses);
 
     const client = new ApolloClient({
       link,
@@ -241,7 +241,7 @@ describe('fetchMore on an observable query', () => {
           variables,
         },
         result,
-      }, ...mockedResponses).setOnError(reject),
+      }, ...mockedResponses),
       cache: new InMemoryCache(cacheConfig),
     });
 
@@ -509,7 +509,7 @@ describe('fetchMore on an observable query', () => {
             groceries: additionalGroceries,
           },
         },
-      }).setOnError(reject),
+      }),
     });
 
     const observable = client.watchQuery({
@@ -821,7 +821,7 @@ describe('fetchMore on an observable query with connection', () => {
         variables,
       },
       result,
-    }, ...mockedResponses).setOnError(reject);
+    }, ...mockedResponses);
 
     const client = new ApolloClient({
       link,
@@ -856,7 +856,7 @@ describe('fetchMore on an observable query with connection', () => {
           variables,
         },
         result,
-      }, ...mockedResponses).setOnError(reject),
+      }, ...mockedResponses),
       cache: new InMemoryCache(cacheConfig),
     });
 
@@ -952,7 +952,7 @@ describe('fetchMore on an observable query with connection', () => {
         request: { query: transformedQuery, variables: variablesMore },
         result: resultMore,
         delay: 5,
-      }).setOnError(reject);
+      });
 
       const client = new ApolloClient({
         link,
@@ -1011,7 +1011,7 @@ describe('fetchMore on an observable query with connection', () => {
         request: { query: transformedQuery, variables: variablesMore },
         result: resultMore,
         delay: 5,
-      }).setOnError(reject);
+      });
 
       const client = new ApolloClient({
         link,
